@@ -1,6 +1,11 @@
 import Attachment from "./Attachment.js";
 import { PassType } from "../types.js";
 
+/**
+ * Represents a render or compute pass.
+ *
+ * It defines the attachments (color, depth/stencil) and the operations (load/store) for the pass.
+ */
 class Pass {
   constructor(
     public type: PassType,

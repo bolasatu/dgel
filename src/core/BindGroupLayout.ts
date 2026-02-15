@@ -3,6 +3,10 @@ import State from "./State.js";
 import { BindingType } from "../constants.js";
 import { BindGroupLayoutEntry } from "../types.js";
 
+/**
+ * Defines the layout of a bind group, describing the resources (buffers, textures, samplers) expected by the shader.
+ * It manages the creation of the GPUBindGroupLayout.
+ */
 class BindGroupLayout {
   public gpuBindGroupLayout: GPUBindGroupLayout;
 
@@ -24,6 +28,10 @@ class BindGroupLayout {
     });
   }
 
+  /**
+   * Calculates the total size of the bind group in bytes.
+   * Useful for creating uniform buffers of the correct size.
+   */
   public getBindGroupSize(): number {
     let size = 0;
 
@@ -41,6 +49,9 @@ class BindGroupLayout {
     return size + (size % 16);
   }
 
+  /**
+   * Calculates the size of a single binding entry based on its uniforms.
+   */
   public getBindingSize(entry: BindGroupLayoutEntry): number {
     let size = 0;
 

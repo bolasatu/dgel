@@ -39,6 +39,12 @@ const DEFAULT_GLSL_FRAGMENT_OUT_COLOR: Attribute[] = [
   new Attribute("outColor", "vec4"),
 ];
 
+/**
+ * Represents a WebGPU rendering or compute pipeline.
+ *
+ * It initializes the shader modules, layout, and pipeline state based on the provided configuration.
+ * It handles both WGSL and GLSL (via translation) shaders.
+ */
 // eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
 class Pipeline {
   public gpuPipeline: GPUPipelineBase;
@@ -68,6 +74,10 @@ class Pipeline {
     this.init();
   }
 
+  /**
+   * Initializes the pipeline by creating the program, shader modules, and WebGPU pipeline object.
+   * It handles attribute mapping, shader construction, and pipeline descriptor creation.
+   */
   public init(): void {
     let insAttributes: Attribute[];
     let hasArrayOfAttributes = false;

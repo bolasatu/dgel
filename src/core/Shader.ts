@@ -12,6 +12,13 @@ import { ShaderOptions } from "../types.js";
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type, @typescript-eslint/no-unsafe-declaration-merging
 interface Shader extends ShaderOptions {}
 
+/**
+ * Represents a single shader stage (Vertex, Fragment, or Compute).
+ *
+ * It assembles the final shader source code by combining the user-provided body,
+ * generated headers (uniforms, bindings), structs, and main function.
+ * It compiles the source into a GPUShaderModule.
+ */
 // eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
 class Shader {
   public shaderModule: GPUShaderModule;
@@ -22,6 +29,11 @@ class Shader {
     Object.assign(this, options);
   }
 
+  /**
+   * Initializes the shader by constructing the source code and creating the shader module.
+   *
+   * @param uniformHeaders - The WGSL/GLSL string containing uniform buffer declarations.
+   */
   public init(uniformHeaders: string): void {
     const isWGSL = this.language === "wgsl";
     const { structs, ins, outs } = isWGSL
@@ -55,6 +67,9 @@ void main() {${this.main}}`;
     });
   }
 
+  /**
+   * Generates WGSL strings for structs, inputs, and outputs.
+   */
   public getWGSLHeaders(): { structs?: string; ins?: string; outs?: string } {
     const structs =
       this.structs
@@ -101,6 +116,9 @@ void main() {${this.main}}`;
     };
   }
 
+  /**
+   * Generates GLSL strings for structs, inputs, and outputs.
+   */
   public getGLSLHeaders(): { structs?: string; ins?: string; outs?: string } {
     const structs =
       this.structs
