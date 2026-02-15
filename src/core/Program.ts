@@ -24,6 +24,12 @@ const isBindingVisible = (
 ): boolean =>
   !uniformOrBinding.visibility || uniformOrBinding.visibility === stage;
 
+/**
+ * Manages the shader program for a pipeline.
+ *
+ * It orchestrates the generation of shader headers (uniforms, bindings) based on the bind group layouts
+ * and initializes the individual shader modules for each stage (Vertex, Fragment, Compute).
+ */
 class Program {
   constructor(
     public bindGroupLayouts: BindGroupLayout[],
@@ -31,6 +37,10 @@ class Program {
     public language: Language,
   ) {}
 
+  /**
+   * Initializes the program by generating headers and initializing shaders.
+   * It iterates through bind group layouts to create WGSL/GLSL declarations for resources.
+   */
   public init(): void {
     const headers = this.bindGroupLayouts?.map((bindGroupLayout, index) =>
       this[`get${this.language.toUpperCase()}Headers`](
@@ -46,6 +56,17 @@ class Program {
     }
   }
 
+  /**
+   * Generates the WGSL string for a buffer binding (uniform or storage buffer).
+   *
+   * @param binding - The bind group layout entry.
+   * @param bindingIndex - The index of the binding within the group.
+   * @param uniforms - The list of uniforms within the buffer.
+   * @param set - The bind group index (set).
+   * @param storageClass - The storage class (uniform or storage).
+   * @param accesMode - The access mode (read or read_write).
+   * @returns The generated WGSL code string.
+   */
   public getWGSLBufferString(
     binding: BindGroupLayoutEntry,
     bindingIndex: number,
@@ -64,6 +85,13 @@ class Program {
 `;
   }
 
+  /**
+   * Generates WGSL headers for all bindings in a bind group layout.
+   *
+   * @param set - The bind group index.
+   * @param entries - The entries in the bind group layout.
+   * @returns An object containing header strings for vertex, fragment, and compute stages.
+   */
   public getWGSLHeaders(
     set: number,
     entries: BindGroupLayoutEntry[],
@@ -196,6 +224,17 @@ class Program {
     return { vertex, fragment, compute };
   }
 
+  /**
+   * Generates the GLSL string for a buffer binding.
+   *
+   * @param binding - The bind group layout entry.
+   * @param bindingIndex - The index of the binding.
+   * @param uniforms - The list of uniforms.
+   * @param set - The bind group index.
+   * @param bindingType - The GLSL storage qualifier (uniform or buffer).
+   * @param layoutQualifierString - Additional layout qualifiers.
+   * @returns The generated GLSL code string.
+   */
   public getGLSLBufferString(
     binding: BindGroupLayoutEntry,
     bindingIndex: number,
@@ -218,6 +257,13 @@ class Program {
 } ${formatLowerFirst(binding.name)};\n\n`;
   }
 
+  /**
+   * Generates GLSL headers for all bindings in a bind group layout.
+   *
+   * @param set - The bind group index.
+   * @param entries - The entries in the bind group layout.
+   * @returns An object containing header strings for vertex, fragment, and compute stages.
+   */
   public getGLSLHeaders(
     set: number,
     entries: BindGroupLayoutEntry[],

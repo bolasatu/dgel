@@ -1,5 +1,8 @@
 import Variable from "./Variable.js";
 
+/**
+ * Represents a vertex attribute input to the shader.
+ */
 class Attribute extends Variable {
   constructor(
     public name: string,

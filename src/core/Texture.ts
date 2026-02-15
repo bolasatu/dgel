@@ -8,6 +8,11 @@ const imageCanvasContext = imageCanvas.getContext("2d", {
 }) as CanvasRenderingContext2D;
 // document.body.appendChild(imageCanvas)
 
+/**
+ * Wrapper around WebGPU GPUTexture.
+ *
+ * It handles loading images, generating mipmaps (via a 2D canvas), and uploading data to the GPU.
+ */
 class Texture {
   public gpuTexture: GPUTexture;
   public mipLevelCount: number;
@@ -38,6 +43,10 @@ class Texture {
     }
   }
 
+  /**
+   * Generates mipmaps for the given image and uploads them to the GPU.
+   * It uses a 2D canvas to resize the image for each mip level.
+   */
   public setMipMap(image: HTMLImageElement): void {
     let faceWidth = image.width;
     let faceHeight = image.height;

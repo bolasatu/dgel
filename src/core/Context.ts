@@ -7,6 +7,11 @@ import {
 } from "../constants.js";
 import { ContextOptions } from "../types.js";
 
+/**
+ * The main entry point for the WebGPU context.
+ *
+ * It handles device initialization, canvas configuration, resizing, and command submission.
+ */
 class Context {
   public canvas: HTMLCanvasElement;
   public context: GPUCanvasContext;
@@ -26,6 +31,10 @@ class Context {
     this.pixelRatio = pixelRatio || window.devicePixelRatio || 1;
   }
 
+  /**
+   * Initializes the WebGPU context, adapter, and device.
+   * Also loads external dependencies like glslang and twgsl for shader compilation/translation.
+   */
   public async init(
     requestAdapter = {},
     deviceDescriptor = {},
@@ -79,6 +88,10 @@ class Context {
     return true;
   }
 
+  /**
+   * Resizes the canvas and reconfigures the context.
+   * Also recreates the default depth/stencil attachment.
+   */
   public resize(
     width: number,
     height: number,
@@ -110,6 +123,11 @@ class Context {
       .createView();
   }
 
+  /**
+   * Submits a command to the GPU.
+   * Handles render pass beginning/ending and state setting (pipeline, buffers, bind groups).
+   * Supports nested commands via subcommand callback (useful for render passes containing multiple draws).
+   */
   public submit(command: Command, subcommand?: () => unknown): void {
     if (!this.commandEncoder) {
       console.warn("You need to submit commands inside the render callback.");
@@ -201,6 +219,9 @@ class Context {
     }
   }
 
+  /**
+   * Helper to execute a frame. Creates a command encoder, runs the callback, and submits the queue.
+   */
   public render(cb: () => unknown): void {
     this.commandEncoder = State.device.createCommandEncoder();
     // Submit commands

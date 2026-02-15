@@ -1,3 +1,6 @@
+/**
+ * A simple clock to track time and delta time between frames.
+ */
 class Clock {
   public startTime = 0;
   public prevTime = 0;

@@ -5,6 +5,12 @@ import BindGroup from "./BindGroup.js";
 
 import { GPUIndexFormat } from "../constants.js";
 
+/**
+ * Represents a GPU command (draw or dispatch).
+ *
+ * It encapsulates the pipeline state, vertex/index buffers, bind groups, and draw parameters.
+ * It can also define a render or compute pass when used as a container.
+ */
 class Command {
   public pass?: Pass;
   public pipeline?: Pipeline;

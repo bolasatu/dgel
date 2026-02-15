@@ -1,5 +1,8 @@
 import Variable from "./Variable.js";
 
+/**
+ * Represents a built-in shader variable (e.g., @builtin(position), @builtin(vertex_index)).
+ */
 class BuiltIn extends Variable {
   constructor(
     public name: string,

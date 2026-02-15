@@ -13,6 +13,12 @@ import { formatLowerFirst, TAB } from "../utils.js";
 // - an atomic type
 // - an array type
 // - a structure type
+/**
+ * Represents a user-defined struct in the shader.
+ *
+ * It can contain other variables, including other structs.
+ * It generates the WGSL/GLSL definition of the struct.
+ */
 class Struct extends Variable {
   public memberName?: string;
 

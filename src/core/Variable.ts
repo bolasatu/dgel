@@ -10,6 +10,12 @@ import { GLSLLayoutQualifier } from "../types.js";
 // TODO: parameter
 const dataType = "32";
 
+/**
+ * Represents a generic variable in a shader (scalar, vector, matrix, etc.).
+ *
+ * It handles type conversion between WGSL and GLSL, and calculation of size and alignment
+ * for buffer layouts (std140, std430).
+ */
 class Variable {
   static isWgsl(type: string): boolean {
     return (
